@@ -97,6 +97,7 @@ DEPENDENCIES
   detektor!
   irb
   rake (~> 13.0)
+  rdoc
   rspec (~> 3.0)
   standard (~> 1.3)
 

@@ -4,9 +4,15 @@ Rake.add_rakelib "tasks"
 
 require "bundler/gem_tasks"
 require "minitest/test_task"
+require "rdoc/task"
+require "standard/rake"
 
 Minitest::TestTask.create
 
-require "standard/rake"
+RDoc::Task.new do |rdoc|
+  rdoc.main = "README.md"
+  rdoc.rdoc_files.include("README.md", "lib/**/*.rb")
+  rdoc.rdoc_dir = "doc"
+end
 
 task default: %i[test standard]
