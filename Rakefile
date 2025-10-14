@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rake.add_rakelib "tasks"
+Rake.add_rakelib "tasks/**"
 
 require "bundler/gem_tasks"
 require "minitest/test_task"

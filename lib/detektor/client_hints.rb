@@ -57,6 +57,5 @@ module Detektor
     def parse_platform(value)
       nil
     end
-
   end
 end
