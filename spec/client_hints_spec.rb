@@ -30,9 +30,4 @@ describe Detektor::ClientHints do
       {given: false, expect: false},
       {given: [{}, nil, "blue", 14, [], ""], expect: nil}
     ])
-
-
-
-
-    
 end
