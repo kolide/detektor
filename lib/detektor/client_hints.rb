@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "detektor/constants"
-
+require "detektor/known"
+require "detektor/detect"
 module Detektor
   class ClientHints
     HEADERS = {
@@ -18,11 +18,13 @@ module Detektor
 
     HEADER_NAMES = HEADERS.values.freeze
 
-    LOW_ENTROPY_HEADER_NAMES = [
-      HEADERS[:user_agent],
-      HEADERS[:is_mobile],
-      HEADERS[:platform]
-    ].freeze
+    LOW_ENTROPY_HEADERS = HEADERS.fetch_values(:user_agent, :is_mobile, :platform).freeze
+
+    HEADERS_FOR_DETECT = {
+      Detect::IsMobile => HEADERS.fetch_values(:is_mobile, :platform),
+      Detect::ExactMobileDevice => HEADERS.fetch_values(:is_mobile, :model, :platform, :platform_version, :form_factors),
+      Detect::InstallBinaries => HEADERS.fetch_values(:platform, :platform_version, :arch)
+    }.freeze
 
     def parse_headers(headers)
       return {} unless headers&.is_a?(Hash)
@@ -32,7 +34,18 @@ module Detektor
           header_value = headers[known_header]
           case known_header
           when HEADERS[:is_mobile]
-            result[Constants::Result::IS_MOBILE] = parse_mobile(header_value)
+            result[:is_mobile] = parse_mobile(header_value)
+          when HEADERS[:platform]
+            os = parse_platform(header_value)
+
+            if headers.key?(HEADERS[:platform_version])
+              os = os.with version: headers[HEADERS[:platform_version]]
+            end
+
+            result[:os] = os
+
+          when HEADERS[:model]
+            result[:model] = parse_model(header_value)
           end
         end
       end
@@ -55,7 +68,11 @@ module Detektor
     end
 
     def parse_platform(value)
-      nil
+      Known::Os.from(value)
+    end
+
+    def parse_model(value)
+      value
     end
   end
 end
