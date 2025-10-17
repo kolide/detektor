@@ -2,32 +2,14 @@
 
 require "detektor/known"
 require "detektor/detect"
+require_relative "client_hints/response_builder"
+require_relative "client_hints/headers"
 module Detektor
   class ClientHints
-    HEADERS = {
-      user_agent: "Sec-CH-UA",
-      arch: "Sec-CH-UA-Arch",
-      bitness: "Sec-CH-UA-Bitness",
-      form_factors: "Sec-CH-UA-Form-Factors",
-      full_version_list: "Sec-CH-UA-Full-Version-List",
-      is_mobile: "Sec-CH-UA-Mobile",
-      model: "Sec-CH-UA-Model",
-      platform: "Sec-CH-UA-Platform",
-      platform_version: "Sec-CH-UA-Platform-Version"
-    }.freeze
-
-    HEADER_NAMES = HEADERS.values.freeze
-
-    LOW_ENTROPY_HEADERS = HEADERS.fetch_values(:user_agent, :is_mobile, :platform).freeze
-
-    HEADERS_FOR_DETECT = {
-      Detect::IsMobile => HEADERS.fetch_values(:is_mobile, :platform),
-      Detect::ExactMobileDevice => HEADERS.fetch_values(:is_mobile, :model, :platform, :platform_version, :form_factors),
-      Detect::InstallBinaries => HEADERS.fetch_values(:platform, :platform_version, :arch)
-    }.freeze
-
     def parse_headers(headers)
-      return {} unless headers&.is_a?(Hash)
+      # this is very dumb but the ActionDispatch::Http:Headers isn't
+      # a Hash, but just an Enumerable with manually added Hash-like methods
+      return {} unless headers&.respond_to?(:key?) && headers.respond_to?(:[])
       result = {}
       HEADER_NAMES.each do |known_header|
         if headers.key?(known_header)
@@ -38,12 +20,19 @@ module Detektor
           when HEADERS[:platform]
             os = parse_platform(header_value)
 
-            if headers.key?(HEADERS[:platform_version])
-              os = os.with version: headers[HEADERS[:platform_version]]
+            # if we have already put the version
+            # make sure to copy it
+            result[:os] = if result[:os]
+              os.with version: result[:os].version
+            else
+              os
             end
+          when HEADERS[:platform_version]
+            # if we haven't gotten the platform name first
+            # make sure we have something there
+            result[:os] ||= Known::Os::Unknown
 
-            result[:os] = os
-
+            result[:os] = result[:os].with version: header_value
           when HEADERS[:model]
             result[:model] = parse_model(header_value)
           end
