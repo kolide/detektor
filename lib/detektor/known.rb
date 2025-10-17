@@ -8,7 +8,7 @@ module Detektor
           os.name.casecmp?(str)
         end
 
-        const_get(existing) || Os[str]
+        const_get(existing) || Result::Os[str]
       end
     end
   end

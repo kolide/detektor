@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "detektor/known"
-require "detektor/detect"
+require_relative "known"
+require_relative "detect"
 require_relative "client_hints/response_builder"
 require_relative "client_hints/headers"
 module Detektor
@@ -9,11 +9,12 @@ module Detektor
     def parse_headers(headers)
       # this is very dumb but the ActionDispatch::Http:Headers isn't
       # a Hash, but just an Enumerable with manually added Hash-like methods
-      return {} unless headers&.respond_to?(:key?) && headers.respond_to?(:[])
+      return {} unless headers&.respond_to?(:[])
       result = {}
       HEADER_NAMES.each do |known_header|
-        if headers.key?(known_header)
-          header_value = headers[known_header]
+        header_value = header_value_for(headers, known_header)
+
+        unless header_value.nil?
           case known_header
           when HEADERS[:is_mobile]
             result[:is_mobile] = parse_mobile(header_value)
@@ -42,6 +43,13 @@ module Detektor
     end
 
     private
+
+    def header_value_for(headers, header_str)
+      str_key_value = headers[header_str]
+      sym_key_value = headers[header_str.to_sym]
+      return str_key_value unless str_key_value.nil?
+      sym_key_value
+    end
 
     def parse_mobile(value)
       if [true, false].include?(value)
