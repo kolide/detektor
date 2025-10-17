@@ -30,7 +30,7 @@ module Detektor
       def to_html
         # e.g. <meta http-equiv="Accept-CH" content="Width, Downlink, Sec-CH-UA" />
         html = ""
-        { 
+        {
           ResponseBuilder::ACCEPT => @accept.join(", "),
           ResponseBuilder::CRITICAL => @critical.join(", "), # note that critical doesn't work like the response header
           ResponseBuilder::VARY => @critical.join(", ")
