@@ -8,5 +8,4 @@ describe Detektor do
       expect(Detektor::VERSION).not_to be_nil
     end
   end
-
 end

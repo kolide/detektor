@@ -5,8 +5,7 @@ require_relative "client_hints/parser"
 module Detektor
   module ClientHints
     def self.parse(headers)
-      result = parse_headers(headers)
-      
+      parse_headers(headers)
     end
   end
 end

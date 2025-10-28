@@ -8,5 +8,4 @@ HEADERS = Detektor::ClientHints::HEADERS
 
 describe Detektor::ClientHints do
   # parsing ----
-
 end

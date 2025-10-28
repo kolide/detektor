@@ -50,7 +50,7 @@ module Detektor
 
     def parse_form_factor(value)
       return [] if value.empty?
-      
+
       return [value.strip] unless value.include?(",")
 
       value.split(",").map { |v| v.strip }
