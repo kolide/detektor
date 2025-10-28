@@ -1,5 +1,6 @@
+require "detektor/detect"
 module Detektor
-  class ClientHints
+  module ClientHints
     HEADERS = {
       user_agent: "Sec-CH-UA",
       arch: "Sec-CH-UA-Arch",
@@ -17,9 +18,12 @@ module Detektor
     LOW_ENTROPY_HEADERS = HEADERS.fetch_values(:user_agent, :is_mobile, :platform).freeze
 
     HEADERS_FOR_DETECT = {
-      Detect::IsMobile => HEADERS.fetch_values(:is_mobile, :platform),
+      Detektor::Detect::IsMobile => HEADERS.fetch_values(:is_mobile, :platform),
       Detect::ExactMobileDevice => HEADERS.fetch_values(:is_mobile, :model, :platform, :platform_version, :form_factors),
       Detect::InstallBinaries => HEADERS.fetch_values(:platform, :platform_version, :arch)
     }.freeze
+
+    # Both :user_agent and :full_version_list headers follow this format
+    VERSION_LIST_REGEX = /"(?<name>.+?)";v="(?<version>.+?)"/
   end
 end

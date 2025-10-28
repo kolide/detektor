@@ -1,6 +1,6 @@
-require_relative "headers"
+require_relative "constants"
 module Detektor
-  class ClientHints
+  module ClientHints
     class ResponseBuilder
       CRITICAL = "Critical-CH"
       ACCEPT = "Accept-CH"

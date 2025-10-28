@@ -1,5 +1,5 @@
 require "detektor/client_hints"
-
+require "detektor/client_hints/response_builder"
 HEADER = {
   critical: Detektor::ClientHints::ResponseBuilder::CRITICAL,
   accept: Detektor::ClientHints::ResponseBuilder::ACCEPT,
