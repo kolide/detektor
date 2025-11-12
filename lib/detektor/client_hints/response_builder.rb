@@ -11,13 +11,13 @@ module Detektor
       end
 
       def self.detecting(detect_option)
-        return new unless ClientHints::HEADERS_FOR_DETECT.key?(detect_option)
+        return new unless ClientHints::HEADERS_FOR_PURPOSE.key?(detect_option)
 
-        new([], ClientHints::HEADERS_FOR_DETECT[detect_option])
+        new([], ClientHints::HEADERS_FOR_PURPOSE[detect_option])
       end
 
       def accept_all
-        @accept = @accept.union(ClientHints::HEADER_NAMES)
+        @accept = @accept.union(UA_HEADERS.values)
         self
       end
 
@@ -49,12 +49,21 @@ module Detektor
       private
 
       def normalize(unsafe_accept, unsafe_critical)
-        @critical = filter_unknown(unsafe_critical || [])
-        @accept = filter_unknown(unsafe_accept || []).union(ClientHints::LOW_ENTROPY_HEADERS, @critical)
+        @critical = ensure_header_array(unsafe_critical)
+        @accept = ensure_header_array(unsafe_accept).union(UAHeaders::LowEntropy, @critical)
       end
 
-      def filter_unknown(arr)
-        arr.filter { |v| ClientHints::HEADERS.value?(v) }
+      def ensure_header_array(arr)
+        return [] if arr.nil?
+        to_ua_arr = arr.map do |v|
+          case v
+          when UAHeader
+            v
+          when Symbol
+            UAHeaders.const_get(v)
+          end
+        end
+        to_ua_arr.compact
       end
     end
   end

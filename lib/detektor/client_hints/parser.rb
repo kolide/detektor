@@ -1,39 +1,42 @@
 require_relative "constants"
-require_relative "form_factors"
-
+require_relative "ch_result"
+require_relative "form_factor"
 module Detektor
   module ClientHints
     module_function
 
-    def parse_headers(headers)
+    ##
+    # Parses CH header values +selected_headers+ from given strings into their respective object shape.
+    # +headers+ must be a hash-like object
+    def parse_headers(headers, selected_headers = UAHeaders::All)
       # this is very dumb but the ActionDispatch::Http::Headers isn't
       # a Hash, but just an Enumerable with manually added Hash-like methods
-      return {} unless headers&.respond_to?(:[])
-      result = {}
+      return nil unless headers&.respond_to?(:[])
+      result = CHResult.new
 
-      HEADER_NAMES.each do |known_header|
-        header_value = header_value_for(headers, known_header)
+      selected_headers.each do |ch_header|
+        header_value = header_value_for(headers, ch_header.spec_name)
 
         unless header_value.nil?
-          case known_header
-          when HEADERS[:arch]
-            result[:arch] = header_value
-          when HEADERS[:bitness]
-            result[:bitness] = header_value
-          when HEADERS[:form_factors]
-            result[:form_factors] = parse_form_factor(header_value)
-          when HEADERS[:full_version_list]
-            result[:full_version_list] = parse_version_list(header_value)
-          when HEADERS[:is_mobile]
-            result[:is_mobile] = parse_mobile(header_value)
-          when HEADERS[:model]
-            result[:model] = header_value
-          when HEADERS[:platform]
-            result[:platform] = header_value
-          when HEADERS[:platform_version]
-            result[:platform_version] = header_value
-          when HEADERS[:user_agent]
-            result[:user_agent] = parse_version_list(header_value)
+          case ch_header
+          when UAHeaders::Arch
+            result.arch = header_value
+          when UAHeaders::Bitness
+            result.bitness = header_value
+          when UAHeaders::FormFactors
+            result.form_factors = parse_form_factors(header_value)
+          when UAHeaders::FullVersionList
+            result.full_version_list = parse_version_list(header_value)
+          when UAHeaders::IsMobile
+            result.mobile = parse_mobile(header_value)
+          when UAHeaders::Model
+            result.model = header_value
+          when UAHeaders::Platform
+            result.platform = header_value
+          when UAHeaders::PlatformVersion
+            result.platform_version = header_value
+          when UAHeaders::UserAgent
+            result.user_agent = parse_version_list(header_value)
           end
         end
       end
@@ -48,7 +51,7 @@ module Detektor
       sym_key_value
     end
 
-    def parse_form_factor(value)
+    def parse_list(value)
       return [] if value.empty?
 
       return [value.strip] unless value.include?(",")
@@ -60,6 +63,10 @@ module Detektor
       return [] if value.nil? || value.empty?
 
       value.scan(VERSION_LIST_REGEX)
+    end
+
+    def parse_form_factors(value)
+      parse_list(value).map { |s| FormFactor[s] }
     end
 
     def parse_mobile(value)

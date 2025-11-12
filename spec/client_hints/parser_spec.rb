@@ -1,20 +1,21 @@
 require "detektor/client_hints/parser"
-require "detektor/client_hints/constants"
-
-HEADERS = Detektor::ClientHints::HEADERS
-
+require "detektor/client_hints/form_factor"
 describe Detektor::ClientHints do
-  describe "#parse_form_factor" do
+  describe "#parse_list" do
     it "parses empty string to empty array" do
-      expect(subject.parse_form_factor("")).to eq([])
+      expect(subject.parse_list("")).to eq([])
     end
 
     it "parses blank string to empty array" do
-      expect(subject.parse_form_factor("  "))
+      expect(subject.parse_list("  "))
     end
 
     it "parses string with trailing space to stripped value in array" do
-      expect(subject.parse_form_factor("test ")).to contain_exactly("test")
+      expect(subject.parse_list("test ")).to contain_exactly("test")
+    end
+
+    it "parses multiple strings with surrounding space to stripped value in array" do
+      expect(subject.parse_list("    test ,  other, thing  ")).to contain_exactly("test", "other", "thing")
     end
   end
 
@@ -62,6 +63,22 @@ describe Detektor::ClientHints do
         match_array(["Google Chrome", "98.0.4750.0"]),
         match_array(["Chromium", "98.0.4750.0"])
       ])
+    end
+  end
+
+  describe "#parse_form_factors" do
+    it "returns single value for single form factor" do
+      given = "Mobile"
+      result = subject.parse_form_factors(given)
+      expect(result).to have_attributes(size: 1)
+      expect(result.first).to eq Detektor::ClientHints::FormFactors::Mobile
+    end
+
+    it "returns multiple values for multiple form factors" do
+      given = "Mobile, Tablet, XR"
+      result = subject.parse_form_factors(given)
+      expect(result).to have_attributes(size: 3)
+      expect(result).to contain_exactly(Detektor::ClientHints::FormFactors::XR, Detektor::ClientHints::FormFactors::Tablet, Detektor::ClientHints::FormFactors::Mobile)
     end
   end
 

@@ -2,13 +2,11 @@
 
 require_relative "detektor/version"
 require_relative "detektor/result"
-require_relative "detektor/parser"
 require_relative "detektor/client_hints"
-require_relative "detektor/known"
-require_relative "detektor/detect"
+require_relative "detektor/purpose"
 
 module Detektor
-  def self.parse(...)
-    Parser.parse(...)
+  def self.detect(headers, what = nil)
+    ClientHints.detect(headers, what)
   end
 end
