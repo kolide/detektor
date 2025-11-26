@@ -1,6 +1,15 @@
 require "detektor/client_hints/parser"
 require "detektor/client_hints/form_factor"
 describe Detektor::ClientHints do
+  describe "#parse_headers" do
+    it "returns nil when headers nil" do
+      expect(subject.parse_headers(nil)).to be_nil
+    end
+    it "returns nil when headers not hash-like" do
+      expect(subject.parse_headers(22)).to be_nil
+    end
+  end
+
   describe "#parse_list" do
     it "parses empty string to empty array" do
       expect(subject.parse_list("")).to eq([])

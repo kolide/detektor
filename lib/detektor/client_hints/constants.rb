@@ -81,8 +81,5 @@ module Detektor
       ExactMobileDevice => [UAHeaders::IsMobile, UAHeaders::Model, UAHeaders::Platform, UAHeaders::PlatformVersion, UAHeaders::FormFactors],
       InstallBinaries => [UAHeaders::IsMobile, UAHeaders::Platform, UAHeaders::PlatformVersion, UAHeaders::Arch]
     }.freeze
-
-    # Both :user_agent and :full_version_list headers follow this format
-    VERSION_LIST_REGEX = /"(?<name>.+?)";v="(?<version>.+?)"/
   end
 end

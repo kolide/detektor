@@ -3,6 +3,9 @@ require_relative "ch_result"
 require_relative "form_factor"
 module Detektor
   module ClientHints
+    # Both :user_agent and :full_version_list headers follow this format
+    VERSION_LIST_REGEX = /"(?<name>.+?)";v="(?<version>.+?)"/
+
     module_function
 
     ##
@@ -11,9 +14,8 @@ module Detektor
     def parse_headers(headers, selected_headers = UAHeaders::All)
       # this is very dumb but the ActionDispatch::Http::Headers isn't
       # a Hash, but just an Enumerable with manually added Hash-like methods
-      return nil unless headers&.respond_to?(:[])
+      return nil unless headers&.respond_to?(:key?) && headers.respond_to?(:[])
       result = CHResult.new
-
       selected_headers.each do |ch_header|
         header_value = header_value_for(headers, ch_header.spec_name)
 
@@ -26,7 +28,7 @@ module Detektor
           when UAHeaders::FormFactors
             result.form_factors = parse_form_factors(header_value)
           when UAHeaders::FullVersionList
-            result.full_version_list = parse_version_list(header_value)
+            result.add_versions(parse_version_list(header_value))
           when UAHeaders::IsMobile
             result.mobile = parse_mobile(header_value)
           when UAHeaders::Model
@@ -36,7 +38,7 @@ module Detektor
           when UAHeaders::PlatformVersion
             result.platform_version = header_value
           when UAHeaders::UserAgent
-            result.user_agent = parse_version_list(header_value)
+            result.add_versions(parse_version_list(header_value))
           end
         end
       end
@@ -45,10 +47,11 @@ module Detektor
     end
 
     def header_value_for(headers, header_str)
-      str_key_value = headers[header_str]
-      sym_key_value = headers[header_str.to_sym]
-      return str_key_value unless str_key_value.nil?
-      sym_key_value
+      [
+        headers[header_str],
+        headers[header_str.downcase],
+        headers[header_str.to_sym]
+      ].find { |v| !v.nil? }
     end
 
     def parse_list(value)

@@ -1,23 +1,92 @@
 require_relative "constants"
 require_relative "form_factor"
+require_relative "brands"
+require "pp"
 module Detektor::ClientHints
   class CHResult
-    attr_accessor :arch, :bitness, :form_factors, :full_version_list, :mobile, :model, :platform, :platform_version, :user_agent
+    attr_accessor :arch, :bitness, :form_factors, :mobile, :model, :platform, :platform_version
+    attr_reader :brands
 
     def initialize
       @form_factors = []
-      @full_version_list = []
-      @user_agent = []
+      @brands = {}
     end
 
     def is_mobile?
-      mobile if mobile
+      return @mobile if @mobile
       form_factors.any? { |ff| [FormFactors::Mobile, FormFactors::Tablet].include? ff }
     end
 
-    def is_android_webview?
-      return false unless is_mobile?
-      puts full_version_list
+    def has_brand?(brand)
+      return false if brand.nil?
+      if brand.is_a?(Brands::Brand)
+        return @brands.key?(brand)
+      elsif (normalized = Brands.brand_from(brand))
+        return @brands.key?(normalized)
+      end
+      nil
+    end
+
+    def add_versions(brands_arr)
+      return if brands_arr.nil? || brands_arr.empty?
+
+      normalized = brands_arr.to_h.transform_keys { |k| Brands.brand_from(k) }
+
+      @brands.merge!(normalized) do |key, new_val, old_val|
+        if new_val.size > old_val.size
+          new_val
+        else
+          old_val
+        end
+      end
+    end
+
+    def inspect
+      output = "<# #{self.class.name}"
+      output << " brands: "
+      output << @brands.inspect
+      output << " arch: #{@arch}"
+      output << " bitness: #{@bitness}"
+      output << " form_factors: #{@form_factors}"
+      output << " mobile: #{@mobile}"
+      output << " model: #{@model}"
+      output << " platform: #{@platform}"
+      output << " platform_version: #{@platform_version}>"
+    end
+
+    def pretty_print(pp)
+      pp.group(1, "<# #{self.class.name}", ">") do
+        pp.breakable
+        pp.group(2, "brands={", "}") do
+          @brands.each do |b, v|
+            pp.text b.name
+            pp.text " => "
+            pp.text v
+            pp.comma_breakable
+          end
+        end
+        pp.comma_breakable
+        pp.text "arch="
+        pp.pp @arch
+        pp.comma_breakable
+        pp.text "bitness="
+        pp.pp @bitness
+        pp.comma_breakable
+        pp.text "form_factors="
+        pp.text @form_factors.map(&:name).join(",")
+        pp.comma_breakable
+        pp.text "mobile="
+        pp.pp @mobile
+        pp.breakable
+        pp.text "model="
+        pp.pp @model
+        pp.comma_breakable
+        pp.text "platform="
+        pp.pp @platform
+        pp.comma_breakable
+        pp.text "platform_version="
+        pp.pp @platform_version
+      end
     end
   end
 end

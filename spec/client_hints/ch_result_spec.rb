@@ -1,5 +1,6 @@
 require "detektor/client_hints/ch_result"
 describe Detektor::ClientHints::CHResult do
+
   context "with a macOS-like result" do
     subject {
       described_class.new.tap do |sub|
@@ -10,16 +11,18 @@ describe Detektor::ClientHints::CHResult do
         sub.form_factors = [Detektor::ClientHints::FormFactor["Desktop"]]
         sub.platform = "macOS"
         sub.platform_version = "15.7.1"
-        sub.user_agent = [
+        # user_agent
+        sub.add_versions([
           ["Chromium", "142"],
           ["Google Chrome", "142"],
           ["Not_A Brand", "99"]
-        ]
-        sub.full_version_list = [
+        ])
+        # full_version_list
+        sub.add_versions([
           ["Chromium", "142.0.7444.135"],
           ["Google Chrome", "142.0.7444.135"],
           ["Not_A Brand", "99.0.0.0"]
-        ]
+        ])
       end
     }
 
