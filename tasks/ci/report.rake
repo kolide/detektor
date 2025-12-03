@@ -2,9 +2,11 @@ namespace "ci" do
   def add_summary(content)
     sh "echo #{content} >> $GITHUB_STEP_SUMMARY"
   end
+
   def add_note(level, message)
     sh "echo ::#{level}::#{message}"
   end
+
   def annotate_test_error(title, message, file, line)
     sh "echo ::error file=#{file},line=#{line},title=#{title}::#{message}"
   end
@@ -17,7 +19,7 @@ namespace "ci" do
       content = File.read(last_run)
       parsed = JSON.parse!(content)
       add_summary("\n#### Coverage\n")
-      parsed["result"].each do |k,v|
+      parsed["result"].each do |k, v|
         add_summary("\n #{key} coverage - #{v}%\n")
       end
     else
@@ -45,6 +47,5 @@ namespace "ci" do
     else
       add_note("warning", "No test report file found at #{report}")
     end
-    
   end
 end
