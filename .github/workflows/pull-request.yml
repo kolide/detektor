@@ -19,4 +19,8 @@ jobs:
     - name: Lint
       run: bundle exec standardrb --format github
     - name: Test
-      run: bundle exec rspec --format documentation
+      run: bundle exec rspec --format documentation --format json --out spec/reports/results.json
+    
+    - name: Report
+      if: ${{ !cancelled() }}
+      run: 'bundle exec rake ci:test_report'
