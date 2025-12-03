@@ -21,7 +21,7 @@ describe Detektor::ClientHints do
 
     describe "with capture #{capture["name"]}" do
       it "matches stored CHResult" do |example|
-        result = subject.detect(Detektor::HeaderWrapper.new(capture["headers"])).ch_result
+        result = subject.detect(Detektor::HeaderWrapper.new(capture["headers"]))
         expect(result).to eq(capture["ch_result"])
       end
     end

@@ -7,6 +7,6 @@ describe Detektor::ClientHints do
   # parsing ----
   it "returns a result" do
     result = subject.detect({"Sec-CH-UA-Form-Factors" => "Mobile"})
-    expect(result).to be_a(Detektor::Result)
+    expect(result).to be_a(Detektor::ClientHints::CHResult)
   end
 end

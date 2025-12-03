@@ -3,7 +3,7 @@
 require_relative "client_hints/constants"
 require_relative "client_hints/parser"
 require_relative "client_hints/response_builder"
-require_relative "result"
+#require_relative "result"
 module Detektor
   module ClientHints
     def self.detect(headers, what = nil)
@@ -12,14 +12,16 @@ module Detektor
       # all of them, because there are not that many
       parsed = parse_headers(headers)
 
-      result = Result.new # if the result of parsed is nil this errors
-      result.ch_result = parsed
+      parsed
 
-      result.is_mobile = parsed.is_mobile?
+      # result = Result.new
+      # result.ch_result = parsed
 
-      result.os = Result::Os[parsed.platform]
+      # result.is_mobile = parsed&.is_mobile?
 
-      result
+      # result.os = Result::Os[parsed.platform]
+
+      # result
     end
   end
 end
