@@ -3,4 +3,4 @@
 ruby_version: 3.1
 
 ignore:
-  - 'spec/rails_test_app/**'
+  - spec/rails_test_app/**/*
