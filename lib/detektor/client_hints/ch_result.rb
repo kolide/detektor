@@ -17,14 +17,18 @@ module Detektor::ClientHints
       form_factors.any? { |ff| [FormFactors::Mobile, FormFactors::Tablet].include? ff }
     end
 
-    def has_brand?(brand)
-      return false if brand.nil?
+    def brand(brand)
+      return nil if brand.nil?
       if brand.is_a?(Brands::Brand)
-        return @brands.key?(brand)
-      elsif (normalized = Brands.brand_from(brand))
-        return @brands.key?(normalized)
+        return @brands[brand]
       end
-      nil
+      normalized = Brands.brand_from(brand)
+      return @brands[normalized]
+    end
+
+    def brand?(brand)
+      return false if brand.nil?
+      return !brand(brand).nil?
     end
 
     def add_versions(brands_arr)
