@@ -39,7 +39,7 @@ namespace "ci" do
           annotate_test_error(
             exception["message"],
             exception["backtrace"],
-            example["file_path"],
+            example["file_path"].delete_prefix("./"),
             example["line_number"]
           )
         end
