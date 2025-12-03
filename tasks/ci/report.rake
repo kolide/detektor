@@ -20,7 +20,7 @@ namespace "ci" do
       parsed = JSON.parse!(content)
       add_summary("\n#### Coverage\n")
       parsed["result"].each do |k, v|
-        add_summary("\n #{key} coverage - #{v}%\n")
+        add_summary("\n #{k} coverage - #{v}%\n")
       end
     else
       add_note("warning", "No coverage file found at #{last_run}")
