@@ -1,12 +1,13 @@
 require "detektor/client_hints/parser"
+require "detektor/header_wrapper"
 require "detektor/client_hints/form_factor"
 require "rspec/support/object_formatter"
+require "action_dispatch"
 require "pp"
 require "yaml"
 describe Detektor::ClientHints do
-  puts RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length
   capture_file = File.join(__dir__, "../header_capture.yml")
-  header_captures = YAML.load_file(capture_file)
+  header_captures = YAML.unsafe_load_file(capture_file)
 
   edited = false
   seen_names = Set.new
@@ -20,18 +21,13 @@ describe Detektor::ClientHints do
 
     describe "with capture #{capture["name"]}" do
       it "matches stored CHResult" do |example|
-        if capture["chresult"].nil?
-          pending("No ch result generated for this capture yet, generating")
-          result = subject.parse_headers(capture["headers"])
-          pretty = PP.pp(result, "")
-          puts pretty
-          raise "Wrote result to capture [#{capture["name"]}]\nif this seems incorrect, fix the bug and try again:\n\n#{pretty}"
-        end
+        result = subject.detect(Detektor::HeaderWrapper.new(capture["headers"])).ch_result
+        expect(result).to eq(capture["ch_result"])
       end
     end
 
     if edited
-      #File.write(capture_file, header_captures.to_yaml)
+      File.write(capture_file, header_captures.to_yaml)
     end
   end
 end

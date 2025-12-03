@@ -41,6 +41,18 @@ module Detektor::ClientHints
       end
     end
 
+    def ==(other)
+      return false if other.nil? || !other.is_a?(self.class)
+      other.arch == @arch &&
+        other.bitness == @bitness &&
+        other.brands == @brands &&
+        other.form_factors == @form_factors &&
+        other.mobile == @mobile &&
+        other.model == @model &&
+        other.platform == @platform &&
+        other.platform_version == @platform_version
+    end
+
     def inspect
       output = "<# #{self.class.name}"
       output << " brands: "

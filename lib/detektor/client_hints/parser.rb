@@ -10,21 +10,20 @@ module Detektor
 
     ##
     # Parses CH header values +selected_headers+ from given strings into their respective object shape.
-    # +headers+ must be a hash-like object
+    # +headers+ should be a HeaderWrapper, but can be a regular Hash for testing purposes
     def parse_headers(headers, selected_headers = UAHeaders::All)
-      # this is very dumb but the ActionDispatch::Http::Headers isn't
-      # a Hash, but just an Enumerable with manually added Hash-like methods
-      return nil unless headers&.respond_to?(:key?) && headers.respond_to?(:[])
+      return nil if headers.nil? || !headers.respond_to?(:key?)
+
       result = CHResult.new
       selected_headers.each do |ch_header|
-        header_value = header_value_for(headers, ch_header.spec_name)
+        header_value = headers[ch_header.spec_name]
 
         unless header_value.nil?
           case ch_header
           when UAHeaders::Arch
-            result.arch = header_value
+            result.arch = clean_value(header_value)
           when UAHeaders::Bitness
-            result.bitness = header_value
+            result.bitness = clean_value(header_value)
           when UAHeaders::FormFactors
             result.form_factors = parse_form_factors(header_value)
           when UAHeaders::FullVersionList
@@ -32,11 +31,11 @@ module Detektor
           when UAHeaders::IsMobile
             result.mobile = parse_mobile(header_value)
           when UAHeaders::Model
-            result.model = header_value
+            result.model = clean_value(header_value)
           when UAHeaders::Platform
-            result.platform = header_value
+            result.platform = clean_value(header_value)
           when UAHeaders::PlatformVersion
-            result.platform_version = header_value
+            result.platform_version = clean_value(header_value)
           when UAHeaders::UserAgent
             result.add_versions(parse_version_list(header_value))
           end
@@ -46,20 +45,17 @@ module Detektor
       result
     end
 
-    def header_value_for(headers, header_str)
-      [
-        headers[header_str],
-        headers[header_str.downcase],
-        headers[header_str.to_sym]
-      ].find { |v| !v.nil? }
+    def clean_value(value)
+      return value if value.nil?
+      value.strip.delete('"')
     end
 
     def parse_list(value)
       return [] if value.empty?
 
-      return [value.strip] unless value.include?(",")
+      return [clean_value(value)] unless value.include?(",")
 
-      value.split(",").map { |v| v.strip }
+      value.split(",").map { |v| clean_value(v) }
     end
 
     def parse_version_list(value)

@@ -1,6 +1,11 @@
 module Detektor::ClientHints
   module Brands
-    Brand = Data.define :name, :regex
+    Brand = Data.define :name, :regex do
+      def ==(other)
+        return super if regex.is_a?(Regexp)
+        other.class == self.class && other.name == name
+      end
+    end
 
     AndroidWebview = Brand["Android WebView", /Android WebView/i]
     Chromium = Brand["Chromium", /Chromium/i]

@@ -1,114 +1,566 @@
 ---
-- name: Phoenix Mac Chrome
-  headers:
-    host: localhost:8443
-    connection: keep-alive
-    cache-control: max-age=0
-    sec-ch-ua: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
-    sec-ch-ua-mobile: "?0"
-    sec-ch-ua-arch: '"arm"'
-    sec-ch-ua-platform: '"macOS"'
-    sec-ch-ua-platform-version: '"26.1.0"'
-    sec-ch-ua-model: '""'
-    sec-ch-ua-bitness: '"64"'
-    sec-ch-ua-full-version-list: '"Chromium";v="142.0.7444.176", "Google Chrome";v="142.0.7444.176",
-      "Not_A Brand";v="99.0.0.0"'
-    sec-ch-ua-form-factors: '"Desktop"'
-    upgrade-insecure-requests: '1'
-    user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
-      (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
-    accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    sec-fetch-site: none
-    sec-fetch-mode: navigate
-    sec-fetch-user: "?1"
-    sec-fetch-dest: document
-    accept-encoding: gzip, deflate, br, zstd
-    accept-language: en-US,en;q=0.9
-- name: Emulator Android Chrome
-  headers:
-    host: 192.168.0.15:8443
-    connection: keep-alive
-    cache-control: max-age=0
-    upgrade-insecure-requests: '1'
-    user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like
-      Gecko) Chrome/134.0.0.0 Mobile Safari/537.36
-    accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    sec-ch-ua: '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"'
-    sec-ch-ua-mobile: "?1"
-    sec-ch-ua-arch: '""'
-    sec-ch-ua-platform: '"Android"'
-    sec-ch-ua-platform-version: '"16.0.0"'
-    sec-ch-ua-model: '"sdk_gphone64_arm64"'
-    sec-ch-ua-bitness: '""'
-    sec-ch-ua-full-version-list: '"Chromium";v="134.0.6998.135", "Not:A-Brand";v="24.0.0.0",
-      "Google Chrome";v="134.0.6998.135"'
-    sec-ch-ua-form-factors: '"Mobile"'
-    sec-fetch-site: none
-    sec-fetch-mode: navigate
-    sec-fetch-user: "?1"
-    sec-fetch-dest: document
-    accept-encoding: gzip, deflate, br, zstd
-    accept-language: en-US,en;q=0.9
+- name: Phoenix Macbook Chrome
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 127.0.0.1:3000
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?0"
+        HTTP_SEC_CH_UA_ARCH: '"arm"'
+        HTTP_SEC_CH_UA_PLATFORM: '"macOS"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"26.1.0"'
+        HTTP_SEC_CH_UA_MODEL: '""'
+        HTTP_SEC_CH_UA_BITNESS: '"64"'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.7444.176", "Google
+          Chrome";v="142.0.7444.176", "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Desktop"'
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+          (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+        HTTP_IF_NONE_MATCH: W/"9ae10f2beb51a0702b7e6c23553f8e4f"
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Desktop
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.7444.176
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Google Chrome
+        regex: !ruby/regexp /Google Chrome/i
+      : 142.0.7444.176
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: '64'
+    mobile: false
+    platform_version: 26.1.0
+    model: ''
+    platform: macOS
+    arch: arm
+- name: Phoenix Pixel8 chrome
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"16.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"Pixel 8"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.7444.171", "Google
+          Chrome";v="142.0.7444.171", "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_DNT: '1'
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML,
+          like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Google Chrome
+        regex: !ruby/regexp /Google Chrome/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 16.0.0
+    model: Pixel 8
+    platform: Android
+    arch: ''
+- name: Phoenix Pixel8 Brave
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML,
+          like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Brave";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"16.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '""'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.0.0", "Brave";v="142.0.0.0",
+          "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_GPC: '1'
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors: []
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.0.0
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Brave
+        regex: !ruby/regexp /Brave/i
+      : 142.0.0.0
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 16.0.0
+    model: ''
+    platform: Android
+    arch: ''
+- name: AndroidEmu sdk36 Chrome
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML,
+          like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"16.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"sdk_gphone64_arm64"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.7444.171", "Google
+          Chrome";v="142.0.7444.171", "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Google Chrome
+        regex: !ruby/regexp /Google Chrome/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 16.0.0
+    model: sdk_gphone64_arm64
+    platform: Android
+    arch: ''
+- name: Phoenix Macbook Safari
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 127.0.0.1:3000
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15
+          (KHTML, like Gecko) Version/26.1 Safari/605.1.15
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+        HTTP_PRIORITY: u=0, i
+        HTTP_ACCEPT_ENCODING: gzip, deflate
+        HTTP_CONNECTION: keep-alive
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors: []
+    brands: {}
 - name: Phoenix TestSamsung SamsungInternet
-  headers:
-    host: 192.168.0.15:8443
-    connection: keep-alive
-    cache-control: max-age=0
-    upgrade-insecure-requests: '1'
-    user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like
-      Gecko) SamsungBrowser/29.0 Chrome/136.0.0.0 Mobile Safari/537.36
-    accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    sec-ch-ua: '"Chromium";v="136", "Samsung Internet";v="29.0", "Not.A/Brand";v="99"'
-    sec-ch-ua-mobile: "?1"
-    sec-ch-ua-arch: '""'
-    sec-ch-ua-platform: '"Android"'
-    sec-ch-ua-platform-version: '"15.0.0"'
-    sec-ch-ua-model: '"SM-S921U1"'
-    sec-ch-ua-bitness: '""'
-    sec-ch-ua-full-version-list: '"Chromium";v="136.0.7103.127", "Samsung Internet";v="29.0.0.59",
-      "Not.A/Brand";v="99.0.0.0"'
-    sec-ch-ua-form-factors: '"Mobile"'
-    sec-fetch-site: none
-    sec-fetch-mode: navigate
-    sec-fetch-user: "?1"
-    sec-fetch-dest: document
-    accept-encoding: gzip, deflate, br
-    accept-language: en-US,en;q=0.9
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_ACCEPT_LANGUAGE: en-US,en
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML,
+          like Gecko) SamsungBrowser/29.0 Chrome/136.0.0.0 Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_CH_UA: '"Chromium";v="136", "Samsung Internet";v="29.0", "Not.A/Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"15.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"SM-S921U1"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="136.0.7103.127", "Samsung
+          Internet";v="29.0.0.59", "Not.A/Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_SEC_FETCH_SITE: cross-site
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 136.0.7103.127
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Samsung Internet
+        regex: !ruby/regexp /Samsung Internet/i
+      : 29.0.0.59
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not.A/Brand
+        regex: Not.A/Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 15.0.0
+    model: SM-S921U1
+    platform: Android
+    arch: ''
 - name: Phoenix TestSamsung Chrome
-  headers:
-    host: 192.168.0.15:8443
-    connection: keep-alive
-    cache-control: max-age=0
-    upgrade-insecure-requests: '1'
-    user-agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like
-      Gecko) Chrome/142.0.0.0 Mobile Safari/537.36
-    accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
-    sec-ch-ua: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
-    sec-ch-ua-mobile: "?1"
-    sec-ch-ua-arch: '""'
-    sec-ch-ua-platform: '"Android"'
-    sec-ch-ua-platform-version: '"15.0.0"'
-    sec-ch-ua-model: '"SM-S921U1"'
-    sec-ch-ua-bitness: '""'
-    sec-ch-ua-full-version-list: '"Chromium";v="142.0.7444.171", "Google Chrome";v="142.0.7444.171",
-      "Not_A Brand";v="99.0.0.0"'
-    sec-ch-ua-form-factors: '"Mobile"'
-    sec-fetch-site: none
-    sec-fetch-mode: navigate
-    sec-fetch-user: "?1"
-    sec-fetch-dest: document
-    accept-encoding: gzip, deflate, br, zstd
-    accept-language: en-US,en;q=0.9
-- name: Phoenix Mac Safari
-  headers:
-    host: localhost:8443
-    sec-fetch-dest: document
-    user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15
-      (KHTML, like Gecko) Version/26.1 Safari/605.1.15
-    accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    sec-fetch-site: none
-    sec-fetch-mode: navigate
-    accept-language: en-US,en;q=0.9
-    priority: u=0, i
-    accept-encoding: gzip, deflate, br
-    connection: keep-alive
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_CACHE_CONTROL: max-age=0
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML,
+          like Gecko) Chrome/142.0.0.0 Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Google Chrome";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"15.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"SM-S921U1"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.7444.171", "Google
+          Chrome";v="142.0.7444.171", "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Google Chrome
+        regex: !ruby/regexp /Google Chrome/i
+      : 142.0.7444.171
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 15.0.0
+    model: SM-S921U1
+    platform: Android
+    arch: ''
+- name: AndroidEmu sdk36 WebviewTestapp
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 16; sdk_gphone64_arm64 Build/BP41.250822.007;
+          wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/134.0.6998.135
+          Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_CH_UA: '"Chromium";v="134", "Not:A-Brand";v="24", "Android WebView";v="134"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"16.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"sdk_gphone64_arm64"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="134.0.6998.135", "Not:A-Brand";v="24.0.0.0",
+          "Android WebView";v="134.0.6998.135"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_X_REQUESTED_WITH: com.example.myapplication
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 134.0.6998.135
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not:A-Brand
+        regex: Not:A-Brand
+      : 24.0.0.0
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Android WebView
+        regex: !ruby/regexp /Android WebView/i
+      : 134.0.6998.135
+    bitness: ''
+    mobile: true
+    platform_version: 16.0.0
+    model: sdk_gphone64_arm64
+    platform: Android
+    arch: ''
+- name: Phoenix Pixel8 WebviewTestapp
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_CONNECTION: keep-alive
+        HTTP_UPGRADE_INSECURE_REQUESTS: '1'
+        HTTP_USER_AGENT: Mozilla/5.0 (Linux; Android 16; Pixel 8 Build/BP3A.251105.015;
+          wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/142.0.7444.102
+          Mobile Safari/537.36
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+        HTTP_SEC_CH_UA: '"Chromium";v="142", "Android WebView";v="142", "Not_A Brand";v="99"'
+        HTTP_SEC_CH_UA_MOBILE: "?1"
+        HTTP_SEC_CH_UA_ARCH: '""'
+        HTTP_SEC_CH_UA_PLATFORM: '"Android"'
+        HTTP_SEC_CH_UA_PLATFORM_VERSION: '"16.0.0"'
+        HTTP_SEC_CH_UA_MODEL: '"Pixel 8"'
+        HTTP_SEC_CH_UA_BITNESS: '""'
+        HTTP_SEC_CH_UA_FULL_VERSION_LIST: '"Chromium";v="142.0.7444.102", "Android
+          WebView";v="142.0.7444.102", "Not_A Brand";v="99.0.0.0"'
+        HTTP_SEC_CH_UA_FORM_FACTORS: '"Mobile"'
+        HTTP_X_REQUESTED_WITH: com.example.myapplication
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_SEC_FETCH_USER: "?1"
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors:
+    - !ruby/data:Detektor::ClientHints::FormFactor
+      name: Mobile
+    brands:
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Chromium
+        regex: !ruby/regexp /Chromium/i
+      : 142.0.7444.102
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Android WebView
+        regex: !ruby/regexp /Android WebView/i
+      : 142.0.7444.102
+      ? !ruby/data:Detektor::ClientHints::Brands::Brand
+        name: Not_A Brand
+        regex: Not_A Brand
+      : 99.0.0.0
+    bitness: ''
+    mobile: true
+    platform_version: 16.0.0
+    model: Pixel 8
+    platform: Android
+    arch: ''

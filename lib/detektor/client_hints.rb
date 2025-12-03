@@ -2,6 +2,7 @@
 
 require_relative "client_hints/constants"
 require_relative "client_hints/parser"
+require_relative "client_hints/response_builder"
 require_relative "result"
 module Detektor
   module ClientHints
@@ -11,7 +12,7 @@ module Detektor
       # all of them, because there are not that many
       parsed = parse_headers(headers)
 
-      result = Result.new
+      result = Result.new # if the result of parsed is nil this errors
       result.ch_result = parsed
 
       result.is_mobile = parsed.is_mobile?

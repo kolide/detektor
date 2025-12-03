@@ -1,6 +1,5 @@
 require "detektor/client_hints/ch_result"
 describe Detektor::ClientHints::CHResult do
-
   context "with a macOS-like result" do
     subject {
       described_class.new.tap do |sub|
@@ -31,7 +30,7 @@ describe Detektor::ClientHints::CHResult do
     end
 
     it "is not an android webview" do
-      expect(subject.is_android_webview?).to be false
+      expect(subject.has_brand?(Detektor::ClientHints::Brands::AndroidWebview)).to be false
     end
   end
 end
