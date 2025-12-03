@@ -39,7 +39,7 @@ namespace "dev" do
     ip = get_local_ip
     `ruby #{android_app_path}/app_commands.rb -d #{device.chomp} -u 'https://#{ip}:9292/client_hints/capture' open`
     puts yellow("Press [ENTER] when app shows capture page content...")
-    wait = $stdin.gets
+    $stdin.gets
 
     stdin.close
     stdout_and_stderr.close
