@@ -16,7 +16,7 @@ module Detektor::ClientHints
       # we should have gotten /something/
       # from the ch-ua header that is supposed to be passed
       # so just shortcut for now
-      return !@brands.empty? 
+      !@brands.empty?
     end
 
     def is_mobile?
