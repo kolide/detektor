@@ -12,9 +12,9 @@ module Detektor
     # Parses CH header values +selected_headers+ from given strings into their respective object shape.
     # +headers+ should be a HeaderWrapper, but can be a regular Hash for testing purposes
     def parse_headers(headers, selected_headers = UAHeaders::All)
-      return nil if headers.nil? || !headers.respond_to?(:key?)
-
       result = CHResult.new
+      return result if headers.nil? || !headers.respond_to?(:key?)
+      
       selected_headers.each do |ch_header|
         header_value = headers[ch_header.spec_name]
 

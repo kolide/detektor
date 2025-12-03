@@ -2,11 +2,11 @@ require "detektor/client_hints/parser"
 require "detektor/client_hints/form_factor"
 describe Detektor::ClientHints do
   describe "#parse_headers" do
-    it "returns nil when headers nil" do
-      expect(subject.parse_headers(nil)).to be_nil
+    it "returns CHResult when headers nil" do
+      expect(subject.parse_headers(nil)).to be_a(Detektor::ClientHints::CHResult)
     end
-    it "returns nil when headers not hash-like" do
-      expect(subject.parse_headers(22)).to be_nil
+    it "returns CHResult when headers not hash-like" do
+      expect(subject.parse_headers(22)).to be_a(Detektor::ClientHints::CHResult)
     end
   end
 
