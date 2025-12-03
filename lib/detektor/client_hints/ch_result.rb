@@ -12,6 +12,13 @@ module Detektor::ClientHints
       @brands = {}
     end
 
+    def has_hints?
+      # we should have gotten /something/
+      # from the ch-ua header that is supposed to be passed
+      # so just shortcut for now
+      return !@brands.empty? 
+    end
+
     def is_mobile?
       return @mobile if @mobile
       form_factors.any? { |ff| [FormFactors::Mobile, FormFactors::Tablet].include? ff }
