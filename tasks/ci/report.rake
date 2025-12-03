@@ -10,6 +10,8 @@ namespace "ci" do
   def annotate_test_error(title, message, file, line)
     sh "echo ::error file=#{file},line=#{line},title=#{title}::#{message}"
   end
+
+  desc "Use in github actions to make summary and annotations for test results and coverage"
   task "test_report" do
     require "json"
     # coverage

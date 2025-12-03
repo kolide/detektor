@@ -8,10 +8,12 @@ namespace "dev" do
     addr_infos.find { |a| a.ipv4_private? }.ip_address
   end
 
+  desc "Runs the test app in spec/rails_test_app"
   task "testapp" do
     sh "#{testapp_path}/bin/rails server"
   end
 
+  desc "Stops the test app using pid files"
   task "testapp:stop" do
     pid_dir = File.expand_path("tmp/pids", testapp_path)
     files = Dir.children(pid_dir).filter { |f| f.end_with?(".pid") }
@@ -21,10 +23,13 @@ namespace "dev" do
     pids.each { |pid| sh("kill -9 #{pid}") }
   end
 
+  desc "Runs the test app in capture mode"
   task "host_capture" do
     sh "CHCAPTURE=true ./spec/rails_test_app/bin/rails server"
   end
 
+  desc "Runs a sequence to get a capture from an Android webview. " \
+    "Requires adb on your path and a device or emulator attached"
   task "android_capture" do
     require "open3"
 
