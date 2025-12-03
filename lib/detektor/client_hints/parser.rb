@@ -45,11 +45,13 @@ module Detektor
       result
     end
 
+    # strips and deletes extraneous quotes (")
     def clean_value(value)
       return value if value.nil?
       value.strip.delete('"')
     end
 
+    # parses a comma separated string list into an array
     def parse_list(value)
       return [] if value.empty?
 
@@ -58,16 +60,19 @@ module Detektor
       value.split(",").map { |v| clean_value(v) }
     end
 
+    # parses a version list string into a array of 2 element arrays like [x, x's version]
     def parse_version_list(value)
       return [] if value.nil? || value.empty?
 
       value.scan(VERSION_LIST_REGEX)
     end
 
+    # parses the string list of form factors into a array of FormFactor objects
     def parse_form_factors(value)
       parse_list(value).map { |s| FormFactor[s] }
     end
 
+    # parses the mobile header value into a true, false or nil
     def parse_mobile(value)
       if [true, false].include?(value)
         return value

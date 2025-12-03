@@ -7,6 +7,9 @@ require_relative "detektor/purpose"
 require_relative "detektor/header_wrapper"
 
 module Detektor
+  ##
+  # Detect client/device data from the given headers.
+  # +what+ is expected to be a Detektor::Purpose
   def self.detect(headers, what = nil)
     ClientHints.detect(HeaderWrapper.new(headers), what)
   end

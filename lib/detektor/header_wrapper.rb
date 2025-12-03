@@ -1,4 +1,7 @@
 module Detektor
+  ##
+  # Wraps header objects to reduce duplicated code dealing
+  # with differences in formatting and structure.
   class HeaderWrapper
     def initialize(headers)
       @wrapped = headers

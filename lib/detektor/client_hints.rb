@@ -3,9 +3,13 @@
 require_relative "client_hints/constants"
 require_relative "client_hints/parser"
 require_relative "client_hints/response_builder"
-# require_relative "result"
 module Detektor
   module ClientHints
+    ##
+    # Detect client hints information from given headers
+    # 
+    # Ignores the value in +what+ and parses all values
+    # because there is not much difference in size between the sets
     def self.detect(headers, what = nil)
       # while we _can_ restrict which headers we process to those
       # necessary for determining `what`, we might as well process

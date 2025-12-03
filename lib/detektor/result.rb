@@ -1,4 +1,7 @@
 module Detektor
+  ##
+  # Not yet used, will eventually wrapp results
+  # from multiple sources
   class Result
     attr_accessor :os, :is_mobile, :ch_result
 

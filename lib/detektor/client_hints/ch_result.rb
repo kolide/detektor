@@ -3,6 +3,11 @@ require_relative "form_factor"
 require_relative "brands"
 require "pp"
 module Detektor::ClientHints
+  ##
+  # Class holding information deduced by parsing client hints headers
+  # 
+  # Holds raw-ish data from the headers and also has methods to query
+  # based on the data.
   class CHResult
     attr_accessor :arch, :bitness, :form_factors, :mobile, :model, :platform, :platform_version
     attr_reader :brands
@@ -12,6 +17,10 @@ module Detektor::ClientHints
       @brands = {}
     end
 
+    ##
+    # Does this result represent a request with client hints
+    # 
+    # i.e. is this useful for querying further or should you ignore it
     def has_hints?
       # we should have gotten /something/
       # from the ch-ua header that is supposed to be passed
@@ -19,11 +28,19 @@ module Detektor::ClientHints
       !@brands.empty?
     end
 
+    ##
+    # Is the client a mobile device.
+    # 
+    # Checks both the mobile header and the form factors array, if available,
+    # because the mobile header might be user-changable with the 'request desktop site'
+    # style setting.
     def is_mobile?
       return @mobile if @mobile
       form_factors.any? { |ff| [FormFactors::Mobile, FormFactors::Tablet].include? ff }
     end
 
+    ##
+    # Get the version information on this brand, if we have it
     def brand(brand)
       return nil if brand.nil?
       if brand.is_a?(Brands::Brand)
@@ -33,11 +50,20 @@ module Detektor::ClientHints
       @brands[normalized]
     end
 
+    ##
+    # Is this brand declared in the client hint headers
     def brand?(brand)
       return false if brand.nil?
       !brand(brand).nil?
     end
 
+    ##
+    # Takes the output of processing the version-list headers and
+    # adds to the brands hash in this class.
+    # 
+    # It replaces any existing hash values if the newer value is
+    # longer, i.e. we had version 135 and then got a better version including
+    # more values like 135.5.5.3
     def add_versions(brands_arr)
       return if brands_arr.nil? || brands_arr.empty?
 
