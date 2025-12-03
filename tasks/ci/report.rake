@@ -34,8 +34,7 @@ namespace "ci" do
       add_summary("\n#### Test results\n")
       add_summary("#{parsed["summary_line"]}\n")
       parsed["examples"].each do |example|
-        puts example["id"]
-        if example["staus"] == "failed"
+        if example["status"] == "failed"
           exception = example["exception"]
           annotate_test_error(
             exception["message"],
