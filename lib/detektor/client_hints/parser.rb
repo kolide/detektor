@@ -14,7 +14,7 @@ module Detektor
     def parse_headers(headers, selected_headers = UAHeaders::All)
       result = CHResult.new
       return result if headers.nil? || !headers.respond_to?(:key?)
-      
+
       selected_headers.each do |ch_header|
         header_value = headers[ch_header.spec_name]
 
