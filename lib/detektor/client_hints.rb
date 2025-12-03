@@ -7,7 +7,7 @@ module Detektor
   module ClientHints
     ##
     # Detect client hints information from given headers
-    # 
+    #
     # Ignores the value in +what+ and parses all values
     # because there is not much difference in size between the sets
     def self.detect(headers, what = nil)

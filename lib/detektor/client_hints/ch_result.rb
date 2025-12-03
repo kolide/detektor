@@ -5,7 +5,7 @@ require "pp"
 module Detektor::ClientHints
   ##
   # Class holding information deduced by parsing client hints headers
-  # 
+  #
   # Holds raw-ish data from the headers and also has methods to query
   # based on the data.
   class CHResult
@@ -19,7 +19,7 @@ module Detektor::ClientHints
 
     ##
     # Does this result represent a request with client hints
-    # 
+    #
     # i.e. is this useful for querying further or should you ignore it
     def has_hints?
       # we should have gotten /something/
@@ -30,7 +30,7 @@ module Detektor::ClientHints
 
     ##
     # Is the client a mobile device.
-    # 
+    #
     # Checks both the mobile header and the form factors array, if available,
     # because the mobile header might be user-changable with the 'request desktop site'
     # style setting.
@@ -60,7 +60,7 @@ module Detektor::ClientHints
     ##
     # Takes the output of processing the version-list headers and
     # adds to the brands hash in this class.
-    # 
+    #
     # It replaces any existing hash values if the newer value is
     # longer, i.e. we had version 135 and then got a better version including
     # more values like 135.5.5.3

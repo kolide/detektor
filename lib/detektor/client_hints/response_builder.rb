@@ -7,8 +7,8 @@ module Detektor
     # via response headers. In the spec, if the server specifies
     # that a client hint header is 'critical', the client should
     # retry the request with all allowed additional values specified.
-    # 
-    # There's some nuance here where some privacy-focused browsers 
+    #
+    # There's some nuance here where some privacy-focused browsers
     # still do not send all the data requested, so don't rely on
     # them 100% unless you know how the browser environment will
     # behave.
@@ -52,8 +52,8 @@ module Detektor
       # Technically, these headers can also be requested via a 'meta' tag in
       # the html page. Note that 'critical' header retry mechanism does NOT
       # work when using meta tags.
-      # 
-      # This method returns a raw html string containing meta tags for this builder's header values. 
+      #
+      # This method returns a raw html string containing meta tags for this builder's header values.
       def to_html
         # e.g. <meta http-equiv="Accept-CH" content="Width, Downlink, Sec-CH-UA" />
         html = ""
