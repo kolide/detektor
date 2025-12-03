@@ -23,12 +23,12 @@ module Detektor::ClientHints
         return @brands[brand]
       end
       normalized = Brands.brand_from(brand)
-      return @brands[normalized]
+      @brands[normalized]
     end
 
     def brand?(brand)
       return false if brand.nil?
-      return !brand(brand).nil?
+      !brand(brand).nil?
     end
 
     def add_versions(brands_arr)

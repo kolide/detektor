@@ -1,7 +1,6 @@
 require "detektor/client_hints/ch_result"
 require "pp"
 describe Detektor::ClientHints::CHResult do
-
   context "nil tests" do
     it "returns false if brand? nil" do
       expect(subject.brand?(nil)).to be false
@@ -18,7 +17,7 @@ describe Detektor::ClientHints::CHResult do
       result = PP.pp(subject, "")
       expect(result).to_not be nil
     end
-    
+
     it "inspect" do
       expect(subject.inspect).to_not be nil
     end
@@ -26,7 +25,7 @@ describe Detektor::ClientHints::CHResult do
 
   context "equals" do
     it "== nil is false" do
-      expect(subject == nil).to be false
+      expect(subject.nil?).to be false
     end
     it "== string is false" do
       expect(subject == "blah").to be false
