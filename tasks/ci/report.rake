@@ -1,6 +1,6 @@
 namespace "ci" do
   def add_summary(content)
-    sh "echo #{content} >> $GITHUB_STEP_SUMMARY"
+    sh "echo '#{content}' >> $GITHUB_STEP_SUMMARY"
   end
 
   def add_note(level, message)
@@ -34,6 +34,7 @@ namespace "ci" do
       add_summary("\n#### Test results\n")
       add_summary("#{parsed["summary_line"]}\n")
       parsed["examples"].each do |example|
+        puts example["id"]
         if example["staus"] == "failed"
           exception = example["exception"]
           annotate_test_error(
