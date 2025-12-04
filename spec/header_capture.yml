@@ -564,3 +564,71 @@
     model: Pixel 8
     platform: Android
     arch: ''
+- name: Phoenix Testiphone edge
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_CONNECTION: keep-alive
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        HTTP_USER_AGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 18_4_1 like Mac OS X)
+          AppleWebKit/605.1.15 (KHTML, like Gecko) EdgiOS/139.0.3405.86 Version/18.0
+          Mobile/15E148 Safari/604.1
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors: []
+    brands: {}
+- name: Phoenix Testiphone chrome
+  headers: !ruby/object:ActionDispatch::Http::Headers
+    req: !ruby/object:ActionDispatch::Request
+      env: &1
+        HTTP_HOST: 192.168.0.17:9292
+        HTTP_SEC_FETCH_SITE: none
+        HTTP_CONNECTION: keep-alive
+        HTTP_SEC_FETCH_MODE: navigate
+        HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+        HTTP_USER_AGENT: Mozilla/5.0 (iPhone; CPU iPhone OS 18_4_1 like Mac OS X)
+          AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/139.0.7258.76 Mobile/15E148
+          Safari/604.1
+        HTTP_ACCEPT_LANGUAGE: en-US,en;q=0.9
+        HTTP_SEC_FETCH_DEST: document
+        HTTP_ACCEPT_ENCODING: gzip, deflate, br
+      filtered_parameters:
+      filtered_env:
+      filtered_path:
+      parameter_filter:
+      protocol:
+      port:
+      rack_request: !ruby/object:Rack::Request
+        env: *1
+        ip:
+        params:
+      method:
+      request_method:
+      remote_ip:
+      original_fullpath:
+      fullpath:
+      ip:
+  ch_result: !ruby/object:Detektor::ClientHints::CHResult
+    form_factors: []
+    brands: {}

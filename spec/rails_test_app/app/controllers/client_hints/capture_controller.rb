@@ -4,7 +4,7 @@ module ClientHints
   class CaptureController < ApplicationController
     def index
       Detektor::ClientHints::ResponseBuilder.detecting(Detektor::Everything).apply_headers(response.headers)
-      ch_result = Detektor.detect(request.headers).ch_result
+      ch_result = Detektor.detect(request.headers)
       filtered_headers = ActionDispatch::Http::Headers.from_hash(request.headers.to_h.filter { |k, v| k.starts_with?("HTTP_") })
       output = "Pretty printed:\n"
       output << PP.pp(ch_result, "")
