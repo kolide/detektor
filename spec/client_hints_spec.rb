@@ -2,10 +2,11 @@
 
 require "detektor/client_hints"
 require "detektor/result"
-require "detektor/known"
-
-HEADERS = Detektor::ClientHints::HEADERS
 
 describe Detektor::ClientHints do
   # parsing ----
+  it "returns a result" do
+    result = subject.detect({"Sec-CH-UA-Form-Factors" => "Mobile"})
+    expect(result).to be_a(Detektor::ClientHints::CHResult)
+  end
 end

@@ -1,0 +1,26 @@
+name: Pull request
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1 # v1.146.0
+      with:
+        bundler-cache: true
+    - name: Lint
+      run: bundle exec standardrb --format github
+    - name: Test
+      run: bundle exec rspec --format documentation --format json --out spec/reports/results.json
+    
+    - name: Report
+      if: ${{ !cancelled() }}
+      run: 'bundle exec rake ci:test_report'
