@@ -19,7 +19,7 @@ module Detektor
     end
 
     def set_strategies(headers)
-      @key_strategy = if headers.instance_of?(::ActionDispatch::Http::Headers)
+      @key_strategy = if defined?(Rails) && headers.instance_of?(::ActionDispatch::Http::Headers)
         method(:key_string)
       else
         method(:key_unknown)
