@@ -14,6 +14,7 @@ RSpec::Core::RakeTask.new(:spec)
 
 RDoc::Task.new do |rdoc|
   rdoc.main = "README.md"
+  rdoc.title = "Detektor docs"
   rdoc.rdoc_files.include("README.md", "lib/**/*.rb")
   rdoc.rdoc_dir = "doc"
   rdoc.generator = "aliki"
