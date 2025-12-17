@@ -2,7 +2,7 @@ name: Pull request
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 permissions:
   contents: read
@@ -16,11 +16,15 @@ jobs:
       uses: ruby/setup-ruby@v1 # v1.146.0
       with:
         bundler-cache: true
+    - name: Mise
+      uses: jdx/mise-action@v2
+      with:
+        install: false
     - name: Lint
-      run: bundle exec standardrb --format github
+      run: standardrb --format github
     - name: Test
-      run: bundle exec rspec --format documentation --format json --out spec/reports/results.json
+      run: rspec --format documentation --format json --out spec/reports/results.json
     
     - name: Report
       if: ${{ !cancelled() }}
-      run: 'bundle exec rake ci:test_report'
+      run: 'rake ci:test_report'
