@@ -2,13 +2,15 @@
 
 require_relative "detektor/version"
 require_relative "detektor/result"
-require_relative "detektor/parser"
 require_relative "detektor/client_hints"
-require_relative "detektor/known"
-require_relative "detektor/detect"
+require_relative "detektor/purpose"
+require_relative "detektor/header_wrapper"
 
 module Detektor
-  def self.parse(...)
-    Parser.parse(...)
+  ##
+  # Detect client/device data from the given headers.
+  # +what+ is expected to be a Detektor::Purpose
+  def self.detect(headers, what = nil)
+    ClientHints.detect(HeaderWrapper.new(headers), what)
   end
 end

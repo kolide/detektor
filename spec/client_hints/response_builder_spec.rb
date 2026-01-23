@@ -24,7 +24,7 @@ describe Detektor::ClientHints::ResponseBuilder do
     it "gives low entropy headers for accept" do
       result = subject[HEADER[:accept]]
       expect(result).not_to be_empty
-      expect(result).to include(*Detektor::ClientHints::LOW_ENTROPY_HEADERS)
+      expect(result).to include(*Detektor::ClientHints::UAHeaders::LowEntropy)
     end
   end
 
@@ -54,7 +54,7 @@ describe Detektor::ClientHints::ResponseBuilder do
       end
     end
 
-    Detektor::ClientHints::HEADERS_FOR_DETECT.keys.each do |option|
+    Detektor::ClientHints::HEADERS_FOR_PURPOSE.keys.each do |option|
       describe "with #{option}" do
         subject { described_class.detecting(option) }
         it "populates vary, critical, and accept" do
@@ -79,7 +79,7 @@ describe Detektor::ClientHints::ResponseBuilder do
       end
 
       it "has all low entropy headers" do
-        expect(subject.to_html).to include(*Detektor::ClientHints::LOW_ENTROPY_HEADERS)
+        expect(subject.to_html).to include(*Detektor::ClientHints::UAHeaders::LowEntropy)
       end
     end
   end

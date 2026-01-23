@@ -3,6 +3,8 @@
 Rake.add_rakelib "tasks"
 Rake.add_rakelib "tasks/**"
 
+require_relative "tasks/utils"
+
 require "bundler/gem_tasks"
 require "rdoc/task"
 require "standard/rake"
@@ -12,8 +14,10 @@ RSpec::Core::RakeTask.new(:spec)
 
 RDoc::Task.new do |rdoc|
   rdoc.main = "README.md"
+  rdoc.title = "Detektor docs"
   rdoc.rdoc_files.include("README.md", "lib/**/*.rb")
   rdoc.rdoc_dir = "doc"
+  rdoc.generator = "aliki"
 end
 
 task default: %i[spec standard]
